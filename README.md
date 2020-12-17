@@ -8,6 +8,31 @@
 
 ## 目次
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [はじめに](#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB)
+- [作成するアプリの概要](#%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%A6%82%E8%A6%81)
+- [事前準備](#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99)
+- [サンプルアプリに実装済みの内容](#%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AB%E5%AE%9F%E8%A3%85%E6%B8%88%E3%81%BF%E3%81%AE%E5%86%85%E5%AE%B9)
+- [動作確認に必要な作業内容](#%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E4%BD%9C%E6%A5%AD%E5%86%85%E5%AE%B9)
+- [作業手順](#%E4%BD%9C%E6%A5%AD%E6%89%8B%E9%A0%86)
+  - [1. mobile backend にアプリを作成する（全認証共通作業）](#1-mobile-backend-%E3%81%AB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E5%85%A8%E8%AA%8D%E8%A8%BC%E5%85%B1%E9%80%9A%E4%BD%9C%E6%A5%AD)
+    - [1.1. アプリの新規作成](#11-%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90)
+    - [1.2. APIキーの確認](#12-api%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D)
+  - [2. Monaca にプロジェクトを作成する（全認証共通作業）](#2-monaca-%E3%81%AB%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E5%85%A8%E8%AA%8D%E8%A8%BC%E5%85%B1%E9%80%9A%E4%BD%9C%E6%A5%AD)
+    - [2.1. プロジェクトのインポート](#21-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88)
+    - [2.2. mobile backend のJavaScript SDK を導入](#22-mobile-backend-%E3%81%AEjavascript-sdk-%E3%82%92%E5%B0%8E%E5%85%A5)
+    - [2.3. mobile backend のAPIキーを設定](#23-mobile-backend-%E3%81%AEapi%E3%82%AD%E3%83%BC%E3%82%92%E8%A8%AD%E5%AE%9A)
+  - [3. メールアドレス認証の動作確認をする](#3-%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E8%AA%8D%E8%A8%BC%E3%81%AE%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D%E3%82%92%E3%81%99%E3%82%8B)
+  - [4. 各種SNS認証を連携する](#4-%E5%90%84%E7%A8%AEsns%E8%AA%8D%E8%A8%BC%E3%82%92%E9%80%A3%E6%90%BA%E3%81%99%E3%82%8B)
+    - [4.1. Facebookとの連携と動作手順](#41-facebook%E3%81%A8%E3%81%AE%E9%80%A3%E6%90%BA%E3%81%A8%E5%8B%95%E4%BD%9C%E6%89%8B%E9%A0%86)
+    - [4.2. Twitterとの連携と動作手順](#42-twitter%E3%81%A8%E3%81%AE%E9%80%A3%E6%90%BA%E3%81%A8%E5%8B%95%E4%BD%9C%E6%89%8B%E9%A0%86)
+    - [4.3. Googleとの連携と動作手順](#43-google%E3%81%A8%E3%81%AE%E9%80%A3%E6%90%BA%E3%81%A8%E5%8B%95%E4%BD%9C%E6%89%8B%E9%A0%86)
+    - [4.3. Appleとの連携と動作手順](#43-apple%E3%81%A8%E3%81%AE%E9%80%A3%E6%90%BA%E3%81%A8%E5%8B%95%E4%BD%9C%E6%89%8B%E9%A0%86)
+  - [5. 実機にアプリをビルドする（全認証共通作業）](#5-%E5%AE%9F%E6%A9%9F%E3%81%AB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E3%83%93%E3%83%AB%E3%83%89%E3%81%99%E3%82%8B%E5%85%A8%E8%AA%8D%E8%A8%BC%E5%85%B1%E9%80%9A%E4%BD%9C%E6%A5%AD)
+    - [5.1. iOS端末にビルド](#51-ios%E7%AB%AF%E6%9C%AB%E3%81%AB%E3%83%93%E3%83%AB%E3%83%89)
+    - [5.2. Android端末にビルド](#52-android%E7%AB%AF%E6%9C%AB%E3%81%AB%E3%83%93%E3%83%AB%E3%83%89)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## はじめに
@@ -30,16 +55,22 @@
 ## 事前準備
 * 開発環境準備
    * Windows でも Mac でもブラウザとして「Google Chrome」のインストールされていれば利用可能です
+      * （参考） Mac OS 10.15.6 (Catalina) にて検証済み
+   * 動作確認端末（Android または iOS）
+      * 本サンプルアプリの動作確認には実機へのビルドが必要です
+         * iOS端末にビルドする場合は、別途[AppleDeveloperProgram](https://developer.apple.com/account/) への登録(11,800 円/年間)が必要です
+      * （参考）検証端末: iPhoneX iOS 13.5.1 にて検証済み
 * ニフクラ mobile backend アカウント作成 ＞ 下記URLよりSNSアカウントにて登録（無料）
    * https://mbaas.nifcloud.com/doc/current/
-* Monaca または Monaca Education アカウント作成 ＞ 下記URLより登録（Freeプランあり）
+* Monaca または Monaca Education アカウント作成 ＞ 下記URLより登録（有料）
    * Monaca https://monaca.mobi/ja/signup
+      * サードパーティ製の Cordova plugin を利用するため、「Pro」プラン以上の契約で利用可能です
    * Monaca Education https://monaca.education/ja/signup
-      * サードパーティ製の Cordova plugin を利用するため、Freeプランでは動作しない可能性があります（詳しくは Monaca サポートへお問い合わせください）
+      * サードパーティ製の Cordova plugin を利用するため、「Education Gold」プラン以上の契約で利用可能です
 
 ## サンプルアプリに実装済みの内容
 
-* コーディング（実装）
+* コーディング
    * ただし、動作確認には各種SNSとの連携に関する作業及びID等の埋め込みが必要です
 * 使用する以下 Cordova plugin の組み込み
    * Facebook: cordova-plugin-facebook4 v6.4.0       
@@ -50,25 +81,49 @@
 
 ## 動作確認に必要な作業内容
 
-1. mobile backend にアプリを作成する（共通）
-2. Monaca にプロジェクトを作成する（共通）
-3. 各種SNS認証を連携する
-   1. Facebookと連携して動作確認をする
-   2. Twitterと連携して動作確認をする
-   3. Googleと連携して動作確認をする
-4. メールアドレス認証の動作確認をする
+1. mobile backend にアプリを作成する（全認証共通作業）
+   1. アプリの新規作成
+   2. APIキーの確認
+2. Monaca にプロジェクトを作成する（全認証共通作業）
+   1. プロジェクトのインポート
+   2. mobile backend のJavaScript SDK を導入
+   3. mobile backend のAPIキーを設定
+3. メールアドレス認証の動作確認をする
+4. 各種SNS認証を連携する
+   1. Facebookとの連携と動作手順
+   2. Twitterとの連携と動作手順
+   3. Googleとの連携と動作手順
+   4. Appleとの連携と動作手順
+5. 実機にアプリをビルドする（全認証共通作業）
+   1. iOS端末にビルド
+   2. Android端末にビルド
 
 ※本チュートリアルの手順通り実装しても正しく動作しない場合、「Issues」＞「New issue」より issue を作成（タイトル及び概要の入力）の上、ご報告ください。順次改修いたします。
 
 ## 作業手順
-### 1. mobile backend にアプリを作成する
+### 1. mobile backend にアプリを作成する（全認証共通作業）
+#### 1.1. アプリの新規作成
+* mobile backend 管理画面にログインし、アプリを作成します。
+   * 既にアプリが１つ以上存在する場合は「+新しいアプリ」をクリックします
+* アプリ名を入力し、「新規作成」をクリックします
+   * 例）アプリ名「SNSApp」
+* アプリが作成されるとAPIキーが表示されますが、ここでは「OK」ボタンをクリックして画面を閉じます
+* アプリの管理画面（ダッシュボード）が表示されます
 
-mobile backend 管理画面にログインし、アプリを作成します。
-* 例）アプリ名「SNSApp」
-* 既にアプリが１つ以上存在する場合は「新しいアプリ」をクリックして作成する
-* （参考） https://mbaas.nifcloud.com/doc/current/introduction/div_quickstart_javascript_monaca.html#アプリの新規作成
+（参考）[クイックスタート：アプリの新規作成 \| ニフクラ mobile backend](https://mbaas.nifcloud.com/doc/current/introduction/div_quickstart_javascript_monaca.html#アプリの新規作成)
 
-### 2. Monaca にプロジェクトを作成する
+
+#### 1.2. APIキーの確認
+
+このあと作成する Monacaプロジェクトに、先ほど mobile backend でアプリ作成時に発行されたAPIキー（アプリケーションキー、クライアントキー）を埋め込むことでフロントエンド（クライアントアプリ）とバックエンド（サーバー）を連携することができます。
+
+* 管理画面右上の「アプリ設定」＞「基本」＞「APIキー」から確認できます
+* 「コピー」ボタンをクリックして利用します
+
+<img src="readme-img/001.png" alt="001" width="400px">
+
+### 2. Monaca にプロジェクトを作成する（全認証共通作業）
+#### 2.1. プロジェクトのインポート
 Monaca または Monaca Education にプロジェクトをインポートします。
 
 * Monacaにログインしてダッシュボードを開き、「インポート」をクリックします
@@ -77,90 +132,127 @@ Monaca または Monaca Education にプロジェクトをインポートしま�
   * `https://github.com/natsumo/MonacaSNSAuthenticationApp/archive/main.zip`
 
 * 「プロジェクト名」を入力して「プロジェクトのインポート」をクリックするとプロジェクトが作成されます
-* 作成したプロジェクトを開き、プロジェクトに mobile backend を Monaca から利用するための JavaScript SDK を導入します
-   * 導入方法はドキュメントサイトを参照ください
-     * https://mbaas.nifcloud.com/doc/current/introduction/div_quickstart_javascript_monaca.html#SDKのインストールと読み込み
+
+#### 2.2. mobile backend のJavaScript SDK を導入
+
+プロジェクトに mobile backend を Monaca から利用するための JavaScript SDK を導入します。
+
+* 作成したプロジェクトを開き、メニューバーの「設定」＞「JS/CSSコンポーネントの追加と削除」をクリックします
+* 「コンポーネント名」の入力欄に `ncmb` と入力し「検索」をクリックします
+* 「ncmb」が表示されたら「追加」をクリックします
+* 「バージョン」はそのまま（最新）で「インストール」をクリックします
+* 「components/ncmb/ncmb.min.js」に必ずチェックをしてから「保存」をクリックします
+* 一覧に表示されれば導入完了です
+
+<img src="readme-img/002.png" alt="002" width="450px">
+
+（参考） [クイックスタート：SDKのインストールと読み込み \| ニフクラ mobile backend](https://mbaas.nifcloud.com/doc/current/introduction/div_quickstart_javascript_monaca.html#SDKのインストールと読み込み)
+
+#### 2.3. mobile backend のAPIキーを設定
+
+Monaca プロジェクトに、mobile backend のAPIキーを埋め込み初期化処理を行います。
+
+* 「js/service.js」ファイルを開きます
+* 以下オブジェクト内 `YOUR_APPLICATION_KEY` と `YOUR_CLIENT_KEY` 部分にそれぞれ[1.2. APIキーの確認](#12-api%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D)で確認したアプリケーションキー、クライアントキーに書き換えます
+
+```js
+const ncmbproperty = {
+    application_key : "YOUR_APPLICATION_KEY",
+    client_key: "YOUR_CLIENT_KEY"
+}
+
+/* 略 */
+
+var ncmb = new NCMB(ncmbproperty.application_key, ncmbproperty.client_key);
+```
+
+[2.3. mobile backend のAPIキーを設定](#23-mobile-backend-%E3%81%AEapi%E3%82%AD%E3%83%BC%E3%82%92%E8%A8%AD%E5%AE%9A)で設定した JavaScript SDK、APIキーの設定及び初期化によって Monaca プロジェクトと mobile backend が連携されました。
+
+### 3. メールアドレス認証の動作確認をする
+
+メールアドレス認証のみ、アプリの実機ビルドなし（プレビュー画面）で動作確認ができます。
+
+* ホゲホゲ
 
 <!-- ★ここまで確認済み -->
 
 ### 4. 各種SNS認証を連携する
-#### 4.1. Facebookと連携して動作確認をする
+
+各種SNS認証（Facebook, Twitter, Google, Apple）との連携作業を実施し、動作確認をしてみましょう。
+
+#### 4.1. Facebookとの連携と動作手順
 
 [こちら](/readme-facebook.md)
 
-#### 4.2. Twitterと連携して動作確認をする
+#### 4.2. Twitterとの連携と動作手順
 
 [こちら](/readme-twitter.md)
 
-#### 4.3. Googleと連携して動作確認をする
+#### 4.3. Googleとの連携と動作手順
 
 [こちら](/readme-google.md)
 
-### 5. メールアドレス認証の動作確認をする
-#### （④メールドレス/パスワード）Monacaの実装コード
+#### 4.3. Appleとの連携と動作手順
 
-* ニフクラ mobile backendを利用するために必要なJavaScript SDKは、下記の方法で導入済みです。
-  - Monaca 画面上部にある「設定」＞「JS/CSSコンポーネント追加と削除」をクリック
-  - 「ncmb」を入力して｢検索｣ボタンを押す
-  - 「追加｣ボタンを押す
-  -  最新バージョンを選択し ｢インストール開始｣ボタンを押す
-  -  ローダーの設定は｢components/ncmb/min.js｣にチェックし｢OK｣ボタンを押す
-  -  "JS/CSSコンポーネントをプロジェクトに追加しました。" 確認の｢OK｣ボタンを押す
+[こちら](/readme-apple.md)
 
+<!-- ★以下確認済み -->
 
-## ①～④の動作確認手順
-* アプリが起動したら、Login画面が表示されます
-* Facebook/Twitter/Googleのボタンをそれぞれクリックします
-    * Facebook/Twitter/Googleログインのブラウザが画面が表示されるのでしたがってログインを行います
-    * ログインに失敗した場合は画面にエラー内容が表示されます（Facebook/Twitter/Googleログインのブラウザ画面でキャンセルした場合は表示されません）
-    * 万が一エラーが発生した場合は、こちらよりエラー内容を確認いただけます
-    * ログインに成功したらログアウトします
+### 5. 実機にアプリをビルドする（全認証共通作業）
 
-    <img src="readme-img/facebook/images-14.png" alt="images-13" style="max-width:60%;">
+動作確認には「デバッグビルド」を行います。
 
-    <img src="readme-img/facebook/images-13.png" alt="images-13" style="max-width:60%;">
+#### 5.1. iOS端末にビルド
 
-    * 管理画面からログインしたユーザーが確認できます  
-    <img src="readme-img/facebook/images-15.png" alt="images-15" style="max-width:100%;">
+[AppleDeveloperProgram](https://developer.apple.com/account/)にログインし、ビルドに必要な証明書類を用意します。
 
-* メールドレス/パスワード
-    * 初回は __登録__ ボタンをクリックして、会員登録を行います
-    * User NameとPasswordを２つ入力して _SignUp_ ボタンをタップします
-    <img src="readme-img/email/demo4.PNG" alt="demo4" style="max-width:60%;">
+* 開発用証明書
+* 開発用プロビジョニングプロファイル
 
-    * 会員登録が成功するとログインされ、下記画面が表示されます
-    <img src="readme-img/email/demo5.PNG" alt="demo5" style="max-width:60%;">
-    * このときmBaaS上に会員情報が作成されます！
-    <img src="readme-img/email/demo7.PNG" alt="demo7" style="max-width:100%;">
-    * ログインに失敗した場合は画面にエラーコードが表示されます
-    * 万が一エラーが発生した場合は、こちらよりエラー内容を確認いただけます
-    * Logout ボタンをタップするとログアウトし、元の画面に戻ります
-    <img src="readme-img/email/demo5.PNG" alt="demo5" style="max-width:60%;">
-    * 登録された会員情報を使ってLogin画面からログインが可能です（操作は同様です）
+（参考）[iOS アプリのビルド \| Monaca Docs](https://docs.monaca.io/ja/products_guide/monaca_ide/build/ios/build_ios/)
 
----
+ビルドに必要な設定をしていきます。
 
-## 参考情報
+* Monaca プロジェクトを開き、メニューバーの「設定」＞「iOSアプリ設定」をクリックします
+* 「アプリケーション名」と「App ID」を入力します
+   * App ID は __プロビジョニングプロファイル__ 作成時に使用した App ID の Bundle ID と同じものを設定します
+* 「対象デバイス」にチェックを入れ「保存」をクリックします
 
-### アプリビルド手順
-#### iOSのビルド案内
+<img src="readme-img/build_001.png" alt="build_001" width="500px">
 
-* Monacaで上メニューバーから`Configure → App settings for iOS` をクリックします。`Application Name`, `App ID`を入れて、`Save`ボタンで保存します。
-![images-8](readme-img/google/images-8.png)
+* 再び、メニューバーの「設定」＞「iOSビルド設定」をクリックします
+* 開発用証明書及び開発用プロビジョニングプロファイルを設定します
 
-* 続いてMonacaで上メニューバーから`Configure → Build settings for iOS`を選択します。`Certificates registered in Monaca` でプロビジョニングファイルとCertificatesをインポートします。
-![images-9](readme-img/google/images-9.png)
+開発用証明書の作成に必要なCSRファイルはMonaca上で作成する方法とMacのキーチェーンアクセスで作成する方法の２パターンあります（作業PCがWindowsのみでの利用の場合は前者の方法を利用します）。CSRの作り方によって操作が異なりますので、詳しくは下記ドキュメントをご覧ください。
 
-* 上メニューバーから`Build → Build app for iOS`を選択しますし、プロビジョニングファイルを選んでから`Start Build`ボタンでビルドできます・
-![images-10](readme-img/google/images-10.png)
+（参考）[iOS アプリのビルド \| Monaca Docs](https://docs.monaca.io/ja/products_guide/monaca_ide/build/ios/build_ios/)
 
-#### Androidのビルド案内
+* アップロードされると「Monacaに登録された証明書」に記載されます
 
-* 上メニューバーから`Configure → App settings for Android`を選択します。`Certificates registered in Monaca` でプロビジョニングファイルとCertificatesをインポートします。
-![images-11](readme-img/google/images-11.png)
+<img src="readme-img/build_002.png" alt="build_002" width="500px">
 
-* 次はKeyStoreの設定手順で、上メニューバーから`Configure → Build settings for iOS`のところでKeystoreをインポートします。
-![images-12](readme-img/google/images-12.png)
+ビルドを実施します。
 
-* 最後は `Build → Build app for Android` から`Start Build`を選択してアプリをビルドします。
-![images-13](readme-img/google/images-13.png)
+* メニューバーの「ビルド」＞「iOSアプリのビルド」をクリックします
+* 「デバッグ向けビルド」＞「デバッグビルド」を選択します
+* 「ビルドの設定」で今回使用する開発用プロビジョニングプロファイルを選択し「ビルドを開始する」をクリックします
+
+<img src="readme-img/build_003.png" alt="build_003" width="500px">
+
+* ビルドが完了したら、ipaファイルをダウンロードして端末に送るか、または直接端末でQRコードを読み取ってインストールします
+
+<img src="readme-img/build_005.png" alt="build_005" width="500px">
+
+#### 5.2. Android端末にビルド
+
+* メニューバーの「ビルド」＞「Androidアプリのビルド」をクリックします
+* 「デバッグ向けビルド」＞「デバッグビルド」を選択します
+* 「ビルドを開始する」をクリックします
+
+<img src="readme-img/build_004.png" alt="build_004" width="500px">
+
+* ビルドが完了したら、apkファイルをダウンロードして端末に送るか、または直接端末でQRコードを読み取ってインストールします
+
+<img src="readme-img/build_006.png" alt="build_006" width="500px">
+
+（参考）[Android アプリのビルド \| Monaca Docs](https://docs.monaca.io/ja/products_guide/monaca_ide/build/build_android/)
