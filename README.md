@@ -245,6 +245,12 @@ var ncmb = new NCMB(ncmbproperty.application_key, ncmbproperty.client_key);
 
 #### 5.2. Android端末にビルド
 
+* Monaca プロジェクトを開き、メニューバーの「設定」＞「Androidアプリ設定」をクリックします
+* 「アプリケーション名」と「パッケージ名」を入力します
+   * 「iOSアプリ設定」で「App ID」を設定済みの場合、「パッケージ名」として「App ID」が反映されます
+
+<img src="readme-img/build_007.png" alt="build_007" width="500px">
+
 * メニューバーの「ビルド」＞「Androidアプリのビルド」をクリックします
 * 「デバッグ向けビルド」＞「デバッグビルド」を選択します
 * 「ビルドを開始する」をクリックします

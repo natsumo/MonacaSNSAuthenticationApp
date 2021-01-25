@@ -9,10 +9,11 @@ Facebook連携にはサードパーティ製の Coedova plugin「cordova-plugin-
 - [事前準備](#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99)
 - [動作確認に必要な作業内容](#%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E4%BD%9C%E6%A5%AD%E5%86%85%E5%AE%B9)
 - [作業手順](#%E4%BD%9C%E6%A5%AD%E6%89%8B%E9%A0%86)
-  - [1. mobile backend 管理画面上での設定](#1-mobile-backend-%E7%AE%A1%E7%90%86%E7%94%BB%E9%9D%A2%E4%B8%8A%E3%81%A7%E3%81%AE%E8%A8%AD%E5%AE%9A)
-  - [2. facebookアプリの作成](#2-facebook%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E4%BD%9C%E6%88%90)
-  - [3. 生成されたキーの確認と実行環境の設定](#3-%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%A8%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A)
-  - [4. pluginへキーを埋め込む](#4-plugin%E3%81%B8%E3%82%AD%E3%83%BC%E3%82%92%E5%9F%8B%E3%82%81%E8%BE%BC%E3%82%80)
+  - [1. facebookアプリの作成](#1-facebook%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E4%BD%9C%E6%88%90)
+  - [2. 生成されたキーの確認と実行環境の設定](#2-%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%A8%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A)
+    - [2.1. キーストア及びキーハッシュの生成手順](#21-%E3%82%AD%E3%83%BC%E3%82%B9%E3%83%88%E3%82%A2%E5%8F%8A%E3%81%B3%E3%82%AD%E3%83%BC%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AE%E7%94%9F%E6%88%90%E6%89%8B%E9%A0%86)
+  - [3. mobile backend 管理画面上での設定](#3-mobile-backend-%E7%AE%A1%E7%90%86%E7%94%BB%E9%9D%A2%E4%B8%8A%E3%81%A7%E3%81%AE%E8%A8%AD%E5%AE%9A)
+  - [4. Coedova plugin へキーを埋め込む](#4-coedova-plugin-%E3%81%B8%E3%82%AD%E3%83%BC%E3%82%92%E5%9F%8B%E3%82%81%E8%BE%BC%E3%82%80)
 - [動作手順](#%E5%8B%95%E4%BD%9C%E6%89%8B%E9%A0%86)
 - [（参考）実装済みコードの紹介](#%E5%8F%82%E8%80%83%E5%AE%9F%E8%A3%85%E6%B8%88%E3%81%BF%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E7%B4%B9%E4%BB%8B)
 
@@ -22,85 +23,177 @@ Facebook連携にはサードパーティ製の Coedova plugin「cordova-plugin-
 
 * Facebook for Developers への登録（無料）
    * https://developers.facebook.com/
+   * 利用には Facebookアカウントが必要です
 
 ## 動作確認に必要な作業内容
 
-1. mobile backend 管理画面上での設定
-2. facebookアプリの作成
-3. 生成されたキーの確認と実行環境の設定
-4. pluginへキーを埋め込む
+1. facebookアプリの作成
+2. 生成されたキーの確認と実行環境の設定
+3. mobile backend 管理画面上での設定
+4. Coedova plugin へキーを埋め込む
 
 ## 作業手順
-### 1. mobile backend 管理画面上での設定
+### 1. facebookアプリの作成
 
-1. `App Settings`のところで`Social Login`を開きます
-2. `Allow to login with facebok`で`allow`にチェックを入れますし、 `APP_ID` を入力します。
-![images-9](readme-img/facebook/images-9.png)
+* Facebook for Developersにログインします
+   * https://developers.facebook.com/
+* 「マイアプリ」＞「アプリを作成」をクリックします
+* ポップアップが表示されたら該当する内容を選び選択し「次へ」をクリックします
+* 「アプリ表示名」を入力し「アプリを作成」をクリックします
+   * 例）「NCMBAuthApp」
+* アプリが作成され、ダッシュボードが開かれます
 
-### 2. facebookアプリの作成
+<img src="readme-img/facebook/001.png" alt="FB001" width="500px">
 
-1. [Facebook for Developers](https://developers.facebook.com/)にログインします。
+### 2. 生成されたキーの確認と実行環境の設定
 
-2. `My Apps → Create App`でアプリを作成します。
+後ほど mobile backend アプリ及び Monaca プロジェクトの Coedova plugin に設定する「アプリID」及び「表示名」の確認と、追加の必須設定をします。
 
- ![images-1](readme-img/facebook/images-1.png)
+* ダッシュボードで「設定」＞「ベーシック」をクリックします
+* 「アプリID」及び「表示名」を確認します
+   * これらは後で使用します
+* 「プライバシーポリシーのURL」及び「ユーザーデータ削除」にURLを入力します
+   * 実運用の場合は正確なURLを用意する必要がありますが、ここでは適当なURLを設定して問題ありません
+* 「カテゴリ」を選択します   
 
-3. 必須な情報を入力したら、`Create App ID`をクリックします。
+<img src="readme-img/facebook/002.png" alt="FB002" width="500px">
+<!-- ★画像修正必要 -->
 
-### 3. 生成されたキーの確認と実行環境の設定
+スマートフォンアプリ環境（iOS及びAndroid）での利用設定を行います。
 
-<!-- `APP_ID`と`APP_NAME`は`cordova-plugin-facebook4`に必要なものだから、これからそれらを取得する方法を説明します。 -->
+* 同じ画面を一番下にスクロールして「+プラットフォームを追加」をクリックします
 
-4. ダッシュボードの<i>Settings</i>から`APP_ID` (App ID) と `APP_NAME` を確認できます。
-※　下で設定する必要があるから、どこかに保存してください。
-![images-2](readme-img/facebook/images-2.png)
+<img src="readme-img/facebook/003.png" alt="FB003" width="300px">
 
-5. `+ Add Platform` でプラットフォームを選択します。
+* 「iOS」をクリックします
+* 「バンドルID」を入力します
+   * 後にアプリをビルドする際、Monacaに設定する「App ID」と同じものを入力してください
+   * （参考）[5.1. iOS端末にビルド](#51-ios%E7%AB%AF%E6%9C%AB%E3%81%AB%E3%83%93%E3%83%AB%E3%83%89)
+* 「シングルサインオン」を有効（はい）にします
 
-6. Androidで実行する場合、`Android`を選択します。
-![images-3](readme-img/facebook/images-3.png)
-* 以下の情報を入力したら、`Save Changes` を押してください。
-    * `Google Play Package Name`: Android App SettingのMonaca Cloud IDEの設定でのAndroid’s Package Nameです。
-    * `Key Hashes`: Android KeyStore SettingsのMonaca Cloud IDE で設定したKeyStoreのSHA-1 fingerprintです。SHA-1 fingerprintの取得方法は[こちら]((https://docs.monaca.io/en/faq/application/#how-to-get-sha-1-fingerprint-of-a-keystore-created-in-monaca-cloud-ide))でご参考ください。
-    * `Single Sign On`を有効にします。
-    ![images-5](readme-img/facebook/images-5.png)
-7. iOS端末で実行する場合、 `+ Add Platform`をクリックしたら`iOS`を選択します。
-    * 以下の情報を入力しますし、`Save Changes`で保存します。
-        * `Bundle ID`: iOS App SettingsのMonaca Cloud IDEで設定したiOSのApp IDです。
-        * `Single Sign On`を有効にします。
-    ![images-4](readme-img/facebook/images-4.png)
+<img src="readme-img/facebook/004.png" alt="FB004" width="450px">
 
-### 4. pluginへキーを埋め込む
+* 同様に「+プラットフォームを追加」をクリックします
+* 「Android」をクリックします
+* 「Google Playパッケージ名」を入力します
+   * 後にアプリをビルドする際、Monacaに設定する「パッケージ名」と同じものを入力してください
+   * （参考）[5.2. Android端末にビルド](#52-android%E7%AB%AF%E6%9C%AB%E3%81%AB%E3%83%93%E3%83%AB%E3%83%89)
+* 「キーハッシュ」を入力します
+   * 入力するキーハッシュは、この後記載の[2.1. キーストア及びキーハッシュの生成手順](#21-%E3%82%AD%E3%83%BC%E3%82%B9%E3%83%88%E3%82%A2%E5%8F%8A%E3%81%B3%E3%82%AD%E3%83%BC%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AE%E7%94%9F%E6%88%90%E6%89%8B%E9%A0%86)にて生成したキーハッシュを入力します
+* 「シングルサインオン」を有効（はい）にします
+* 最後に一番下にある「変更を保存」をクリックします
 
-1. Monacaを開きます
-2. 上記のメニューバーから`Configure → Cordova Plugin Settings`をキリックします。
-3. `Enbaled plugins`のところで、 `cordova-plugin-facebook4`の`Configure`ボタンをクリックします。
-![images-7](readme-img/facebook/images-7.png)
-4. 上で取得できた`APP_ID` と `APP_NAME`を入れます。
-![images-8](readme-img/facebook/images-8.png)
-5. `OK`ボタンで保存します。
+<img src="readme-img/facebook/005.png" alt="FB005" width="450px">
+
+<!-- ここまで設定を追えたら、上部の「開発中」を「ライブ」に切り替えます。
+
+ * 「開発中」のスイッチをクリックします
+   * いくつかアラートが出てきますが、進んでください
+ * 「ライブ」に切り替わればOKです -->
+ <!-- ★画像を追加 -->
+
+これで Facebook for Developers での設定は完了です。
+
+#### 2.1. キーストア及びキーハッシュの生成手順
+
+* Monaca を開きます
+* メニューバーの「設定」＞「Androidキーストア設定」をクリックします
+* 「キーストアとエイリアスの作成」の「新しく作成する」をクリックします
+
+<img src="readme-img/facebook/009.png" alt="FB009" width="500px">
+
+* 「エイリアス名」、「エイリアスのパスワード」及び「Keystoreのパスワードを入力してください」について入力し、「キーストアとエイリアスの作成」をクリックします
+
+<img src="readme-img/facebook/010.png" alt="FB010" width="400px">
+
+* キーストアが作成されtら「エクスポート」をクリックして任意の場所に書き出します
+   * 書き出されるファイル「keystore.private」
+* ターミナルを起動し、キーストアがエクスポートされてたリポジトリに移動します
+* 次のコマンドを実行します
+   * 「keystore.private」がダウンロードされたリポジトリに移動します
+   * `YOUR_SETTING_ALIAS_NAME` はキーストア作成時に「エイリアス名」に設定してください
+
+```bash
+keytool -exportcert -alias YOUR_SETTING_ALIAS_NAME -keystore keystore.private | openssl sha1 -binary | openssl base64
+```
+
+* パスワードが要求されるので、キーストア作成時に「エイリアスのパスワード」に設定したパスワードを入力します
+* キーハッシュが生成されるので、Facebook Developer の所定の場所（[2. 生成されたキーの確認と実行環境の設定](#2-%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%A8%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A)参照）に設定します
+
+<img src="readme-img/facebook/011.png" alt="FB011" width="500px"><br>
+※例ではダウンロードファイル名を「ncmb20210125_keystore.private」と変更しています。
+
+（参考）[アプリケーション: キーストア内の SHA-1 フィンガープリントを確認する方法 ( Monaca クラウド IDE 上のキーストアを使用 ) \| Monaca Docs](https://docs.monaca.io/ja/faq/application/#%E3%82%AD%E3%83%BC%E3%82%B9%E3%83%88%E3%82%A2%E5%86%85%E3%81%AE-sha-1-%E3%83%95%E3%82%A3%E3%83%B3%E3%82%AC%E3%83%BC%E3%83%97%E3%83%AA%E3%83%B3%E3%83%88%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95-monaca-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89-ide-%E4%B8%8A%E3%81%AE%E3%82%AD%E3%83%BC%E3%82%B9%E3%83%88%E3%82%A2%E3%82%92%E4%BD%BF%E7%94%A8)
+
+（参考）個人利用の場合はキーハッシュ作成に必要なJavaSE（Open JDK)は下記からダウンロードできます
+http://openjdk.java.net/
+
+### 3. mobile backend 管理画面上での設定
+
+* mobile backend の管理画面を開き、右上の「アプリ設定」＞「SNS連携」を開きます
+* 「Facebook連携」の「Facebook連携の許可」で「許可する」を選択します
+* 「Facebook App ID」には [2. 生成されたキーの確認と実行環境の設定](#2-%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%A8%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A) で確認した「アプリID」をコピーして貼り付けます
+
+<img src="readme-img/facebook/006.png" alt="FB006" width="400px">
+
+これで mobile backend の設定は完了です。
+
+### 4. Coedova plugin へキーを埋め込む
+
+Monacaに設定済みのサードパーティ製の Coedova plugin「cordova-plugin-facebook4 v6.4.0」に設定を追加します。
+
+* Monacaプロジェクトを開き、メニューバーの「設定」＞「Coedovaプラグインの管理」をクリックします
+* 「有効なプラグイン」の一覧から「cordova-plugin-facebook4 v6.4.0」を探し、カーソルを合わせるとポップアップが表示されるので「設定」をクッリックします
+
+<img src="readme-img/facebook/007.png" alt="FB007" width="200px">
+
+* [2. 生成されたキーの確認と実行環境の設定](#2-%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%AD%E3%83%BC%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%A8%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A) で確認した「アプリID」及び「表示名」をそれぞれ `YOUR_FACEBOOK_APP_ID` 及び `YOUR_FACEBOOK_APP_NAME` にコピーして貼り付けます
+* 入力が完了したら「OK」をクリックします
+
+<img src="readme-img/facebook/008.png" alt="FB008" width="300px">
+
+これで動作確認に必要な設定が全て完了しまし。
 
 ## 動作手順
 
-[5. 実機にアプリをビルドする（全認証共通作業）](#5-%E5%AE%9F%E6%A9%9F%E3%81%AB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E3%83%93%E3%83%AB%E3%83%89%E3%81%99%E3%82%8B%E5%85%A8%E8%AA%8D%E8%A8%BC%E5%85%B1%E9%80%9A%E4%BD%9C%E6%A5%AD)を参照して端末をアプリにビルドできたら以下ので順で動作確認ができます。
+* [5. 実機にアプリをビルドする（全認証共通作業）](#5-%E5%AE%9F%E6%A9%9F%E3%81%AB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E3%83%93%E3%83%AB%E3%83%89%E3%81%99%E3%82%8B%E5%85%A8%E8%AA%8D%E8%A8%BC%E5%85%B1%E9%80%9A%E4%BD%9C%E6%A5%AD)を参照して端末をアプリにビルドします
+* アプリが起動したら「Facebook」のボタンをタップします
 
-* アプリが起動したら、Login画面が表示されます
-* Facebook/Twitter/Googleのボタンをそれぞれクリックします
-    * Facebook/Twitter/Googleログインのブラウザが画面が表示されるのでしたがってログインを行います
-    * ログインに失敗した場合は画面にエラー内容が表示されます（Facebook/Twitter/Googleログインのブラウザ画面でキャンセルした場合は表示されません）
-    * 万が一エラーが発生した場合は、こちらよりエラー内容を確認いただけます
-    * ログインに成功したらログアウトします
+<!-- ★キャプチャを用意する -->
 
-    <img src="readme-img/facebook/images-14.png" alt="images-13" style="max-width:60%;">
+* Facebookログインのブラウザが画面が表示されるのでしたがってログインを行います
 
-    <img src="readme-img/facebook/images-13.png" alt="images-13" style="max-width:60%;">
+<!-- ★キャプチャを用意する -->
 
-    * 管理画面からログインしたユーザーが確認できます  
-    <img src="readme-img/facebook/images-15.png" alt="images-15" style="max-width:100%;">
+* 正しくログインがされると次の画面が表示されます
+
+<!-- ★キャプチャを用意する -->
+
+mobile backend の管理画面を確認するとFacebook連携で登録されたユーザー情報を確認するとができます。
+
+* mobile backend の管理画面を開き、「会員管理」＞「全ての会員」を確認します
+
+<!-- ★キャプチャを用意する -->
+
+* Facebook認証の場合は「authData」フィールドに次のようにデータが格納されます
+
+<!-- ★キャプチャを用意する -->
+
+正しく動作しない場合はエラーがAlertに表示されます。作業手順を1つ1つ見直してみてください。また、次の注意事項も確認してください。
+
+### 注意事項
+
+* Android端末でかつ開発ビルドの場合、検証端末にFacebookアプリがインストールされているとキーハッシュの値が競合して正しく動作確認が行えないようです
+   * Facebookアプリを一度アンインストールしてから試してください
+   * リリースビルドの場合は問題ありません
+* Facebook Developer の設定が正しく反映されないことがあるようです
+   * その場合は一度アプリを削除して再度作り直すことで改善します
 
 ## （参考）実装済みコードの紹介
 
-1. Componentsファイル
+<!-- ★あとで追記する -->
+
+<!--1. Componentsファイル
 
 | File | Description |
 | --- | --- |
@@ -182,4 +275,4 @@ function onFacebookLogin(response) {
         alert('Please login to facebook!');
     }
 }
-```
+``` -->
